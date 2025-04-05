@@ -57,7 +57,13 @@ h1 {
     border-bottom: 0.35rem solid var(--lt-violet2);
     margin: 1rem 0;
     padding-top: 0.35rem;
+    
 }
+.display:focus {
+    outline: none; /* removes the white box */
+}
+
+
 
 
 .display {
