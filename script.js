@@ -1,6 +1,9 @@
+const indicator = document.querySelector("[data-indicator]");
 let password = "";
 let passwordLength = 10;
 let checkCount = 0;
+//  strength circle color to grey
+setIndicator("#ccc");
 
 // set passwordLength
 const inputSlider = document.querySelector("[data-lengthSlider]"); // syntax to write custom attribute
@@ -12,26 +15,27 @@ function handleSlider() {
 handleSlider();
 
 // set password Indicator
-const indicator = document.querySelector("[data-indicator]");
+
 function setIndicator(color) {
   indicator.style.backgroundColor = color;
-  // shadow
+  indicator.style.boxShadow = `0px 0px 12px 1px ${color}`;
 }
 
 function getRandomInteger(min, max) {
+  // min included and max excluded
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function generateRandomNumber() {
-  return getRandomInteger(0, 9);
+  return getRandomInteger(0, 10);
 }
 
 function generateLowerCase() {
-  return String.fromCharCode(getRandomInteger(97, 123)); //97 ->a , 123 -> z
+  return String.fromCharCode(getRandomInteger(97, 123)); //97 ->a , 122 -> z
 }
 
 function generateUpperCase() {
-  return String.fromCharCode(getRandomInteger(65, 90)); //65 ->A , 91 -> Z
+  return String.fromCharCode(getRandomInteger(65, 91)); //65 ->A , 90 -> Z
 }
 
 const symbol = "~`!@#$%^&*()_+=-?/<>][}{";
@@ -74,19 +78,17 @@ function shufflePassword(array) {
     const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
-     
   }
- 
+
   let str = "";
-  array.forEach((el)=>{
-     str += el;
-    
-  })
+  array.forEach((el) => {
+    str += el;
+  });
   return str;
 }
 
 const allCheckBox = document.querySelectorAll("input[type=checkbox]");
-console.log(allCheckBox);
+// console.log(allCheckBox);
 function handleCheckBoxChange() {
   checkCount = 0;
   allCheckBox.forEach((checkbox) => {
@@ -163,7 +165,7 @@ generateBtn.addEventListener("click", () => {
   if (numbersCheck.checked) funcArr.push(generateRandomNumber);
 
   if (symbolsCheck.checked) funcArr.push(generateSymbol);
-  console.log(funcArr);
+  // console.log(funcArr);
 
   // compulsory Addition
   for (let i = 0; i < funcArr.length; i++) {
@@ -178,5 +180,6 @@ generateBtn.addEventListener("click", () => {
 
   // shuffle the password
   password = shufflePassword(Array.from(password));
-  passwordDisplay.value = password
+  passwordDisplay.value = password;
+  calculateStrength();
 });
